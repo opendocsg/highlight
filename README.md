@@ -1,4 +1,5 @@
 # highlight
+A website for annotating text files for entity recognition. Annotation is exported in .csv format and compatible with Amazon Comprehend.
 
 ## Project setup
 ```
