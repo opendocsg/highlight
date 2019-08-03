@@ -12,56 +12,57 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        fileTitle: '',
-        processedText: [],
-        rawText: '',
-      }
-    },
-    mounted() {
-      this.$root.$on('fileUploaded', (fileTitle, text) => {
-        this.fileTitle = fileTitle
-        this.rawText = text
-      })
-      let dropbox = document.getElementById("dropbox");
-      dropbox.addEventListener("dragenter", this.dragenter, false);
-      dropbox.addEventListener("dragover", this.dragover, false);
-      dropbox.addEventListener("drop", this.drop, false);
-    },
-    watch: {
-      rawText () {
-        if (this.rawText !== '') {
-          this.processedText = this.rawText.split('\n')
-        }
-      }
-    },
-    methods: {
-      dragenter(e) {
-        e.stopPropagation();
-        e.preventDefault();
-      },
-      dragover(e) {
-        e.stopPropagation();
-        e.preventDefault();
-      },
-      drop(e) {
-        e.stopPropagation();
-        e.preventDefault();
 
-        const dt = e.dataTransfer;
-        const file = dt.files[0];
-        // TODO: Check file extension
-        this.fileTitle = file.name
-        let reader = new FileReader()
-        reader.readAsText(file)
-        reader.onload = () => {
-          this.rawText = reader.result
-        }
+export default {
+  data () {
+    return {
+      fileTitle: '',
+      processedText: [],
+      rawText: '',
+    }
+  },
+  mounted() {
+    this.$root.$on('fileUploaded', (fileTitle, text) => {
+      this.fileTitle = fileTitle
+      this.rawText = text
+    })
+    let dropbox = document.getElementById("dropbox");
+    dropbox.addEventListener("dragenter", this.dragenter, false);
+    dropbox.addEventListener("dragover", this.dragover, false);
+    dropbox.addEventListener("drop", this.drop, false);
+  },
+  watch: {
+    rawText () {
+      if (this.rawText !== '') {
+        this.processedText = this.rawText.split('\n')
+      }
+    }
+  },
+  methods: {
+    dragenter(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    dragover(e) {
+      e.stopPropagation();
+      e.preventDefault();
+    },
+    drop(e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      const dt = e.dataTransfer;
+      const file = dt.files[0];
+      // TODO: Check file extension
+      this.fileTitle = file.name
+      let reader = new FileReader()
+      reader.readAsText(file)
+      reader.onload = () => {
+        this.rawText = reader.result
       }
     }
   }
+}
 </script>
 
 <style>
