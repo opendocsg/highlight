@@ -19,9 +19,10 @@ export default {
   },
   beforeDestroy() {
     let dropbox = document.getElementById("dropbox")
-    dropbox.removeEventListener("dragenter")
-    dropbox.removeEventListener("dragover")
-    dropbox.removeEventListener("drop")
+    if (dropbox === null) return
+    dropbox.removeEventListener("dragenter", this.dragenter)
+    dropbox.removeEventListener("dragover", this.dragover)
+    dropbox.removeEventListener("drop", this.drop)
   },
   methods: {
     dragenter(e) {

@@ -1,5 +1,6 @@
 <template>
   <div id="labels-box">
+    Labels
   </div>
 </template>
 

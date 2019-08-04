@@ -60,6 +60,9 @@ export default {
   methods: {
     onMouseup() {
       const selection = window.getSelection()    
+      if (selection.rangeCount < 1) {
+        return
+      }
       const selectionRange = selection.getRangeAt(0)    
       const startNode = selectionRange.startContainer.parentNode // startNode is the element that the selection starts in        
       const endNode = selectionRange.endContainer.parentNode  // endNode is the element that the selection ends in    
@@ -72,7 +75,7 @@ export default {
         return    
       }
       // Get the x, y, and width of the selection    
-      const { x, y, width } = selectionRange.getBoundingClientRect()    
+      const { top, right, width } = selectionRange.getBoundingClientRect()    
 
       // If width === 0 (i.e. no selection), hide the menu    
       if (!width) {
@@ -84,8 +87,8 @@ export default {
       // set the position of the menu element,    
       // record offsets and line number 
       // then, show the menu    
-      this.x = x + (width / 2)    
-      this.y = y + window.scrollY - 10    
+      this.x = right + window.scrollX - 230
+      this.y = top + window.scrollY - 130
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset
       this.showMenu = true  

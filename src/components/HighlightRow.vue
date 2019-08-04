@@ -39,6 +39,7 @@ export default {
 
 <style scoped>
 #highlight-row {
+  margin-bottom: 0.25em;
 }
 
 </style>
