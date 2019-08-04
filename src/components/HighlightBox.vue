@@ -5,16 +5,25 @@
       <!-- You can add more buttons here -->    
     </div>    
     <!-- The insterted text should be displayed here -->    
-    <p>The quick brown fox jumps over the lazy dog.</p>
-    <p>The quick brown fox jumps over the lazy dog.</p>
-    <p>The quick brown fox jumps over the lazy dog.</p>
+    <HighlightRow 
+      v-for="(line, index) in processedText" 
+      v-bind:key="index"
+      v-bind:row="line"
+      v-bind:lineNum="index"
+      v-bind:annotation="getAnnotationForLine(index)"
+    ></HighlightRow>
   </div>
 </template>
 
 <script>
 import Annotation from './Annotation'
+import HighlightRow from './HighlightRow'
+import _ from 'lodash'
 
 export default {
+  components: {
+    HighlightRow
+  },
   data() {
     return {
       x: 0,
@@ -22,7 +31,7 @@ export default {
       showMenu: false,
       anchorOffset: -1,
       focusOffset: -1,
-      lineNo: -1
+      line: -1
     }
   },
   computed: {
@@ -33,9 +42,12 @@ export default {
   props: {
     annotations: {
       validator: function(annotationArr) {
-        /* eslint-disable */
-        console.log(annotationArr)
         return annotationArr.every(Annotation.validate)
+      }
+    },
+    processedText: {
+      validator: function(stringArr) {
+        return stringArr.every(_.isString)
       }
     }
   },
@@ -77,11 +89,19 @@ export default {
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset
       this.showMenu = true  
-      this.lineNo = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
+      this.line = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
     },
     handleAction(action) {
-      this.$emit(action, Annotation.create(this.lineNo, this.anchorOffset, this.focusOffset, 'DEFAULT'))
+      this.$emit(action, Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT'))
     },
+    getAnnotationForLine(lineNum) {
+      for (var i=0; i<this.annotations.length; i++) {
+        if (this.annotations[i].line === lineNum) {
+          return this.annotations[i]
+        }
+      }
+      return null
+    }
   }
 }
 </script>

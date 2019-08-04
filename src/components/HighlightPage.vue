@@ -3,7 +3,10 @@
     <div class="main-highlight-window">
       <h2 class="file-title">{{ document.title }}</h2>
       <br/>
-      <HighlightBox v-bind:annotations="annotations" @highlight="onHighlight">
+      <HighlightBox 
+        v-bind:processedText="document.processedText" 
+        v-bind:annotations="annotations" 
+        @highlight="onHighlight">
       </HighlightBox>
     </div>
     <LabelsBox v-bind:labels="annotations"></LabelsBox>
@@ -23,7 +26,7 @@ export default {
     return {
       document: {
         title: 'Hello',
-        text: '<p>The quick brown fox jumps over the lazy dog.</p>'
+        processedText: ['The quick brown fox jumps over the lazy dog.', 'Yada mada gogo gaga']
       },
       annotations: []
     }
