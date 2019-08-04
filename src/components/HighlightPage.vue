@@ -1,10 +1,10 @@
 <template>
   <div id="highlight-page">
     <div class="main-highlight-window">
-      <h2 class="file-title">{{ document.title }}</h2>
+      <h2 class="file-title">{{ title }}</h2>
       <br/>
       <HighlightBox 
-        v-bind:processedText="document.processedText" 
+        v-bind:processedText="processedText" 
         v-bind:annotations="annotations" 
         @highlight="onHighlight">
       </HighlightBox>
@@ -16,6 +16,7 @@
 <script>
 import HighlightBox from './HighlightBox'
 import LabelsBox from './LabelsBox'
+import _ from 'lodash'
 
 export default {
   components: {
@@ -24,11 +25,17 @@ export default {
   },
   data() {
     return {
-      document: {
-        title: 'Hello',
-        processedText: ['The quick brown fox jumps over the lazy dog.', 'Yada mada gogo gaga']
-      },
       annotations: []
+    }
+  },
+  props: {
+    processedText: {
+      validate: function(arr) {
+        return arr.every(_.isString)
+      }
+    },
+    title: {
+      type: String
     }
   },
   methods: {

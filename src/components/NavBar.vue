@@ -10,7 +10,7 @@
           Upload txt file... &nbsp; ⌘U
         </b-dropdown-item>
         <input id="uploadBtn" type="file" @change="loadFile">
-        <b-dropdown-item>
+        <b-dropdown-item >
           Export csv file... &nbsp; ⌘E
         </b-dropdown-item>
       </b-dropdown>
