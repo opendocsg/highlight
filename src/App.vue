@@ -7,10 +7,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="#">Features</a>
-          <a class="nav-item nav-link" href="#">Pricing</a>
-          <a class="nav-item nav-link disabled" href="#">Disabled</a>
+          <router-link class="nav-item nav-link" to="/upload">Upload</router-link>
+          <router-link class="nav-item nav-link" to="/about">About</router-link>
         </div>
       </div>
     </nav>
@@ -33,5 +31,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nav-item.nav-link.router-link-active {
+  color:black;
 }
 </style>
