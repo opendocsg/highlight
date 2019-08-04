@@ -2,10 +2,12 @@
   <div ref="highlightBox" id="highlight-box">
     <div v-show="showMenu" class="menu" :style="{left: `${x}px`,top: `${y}px`}" @mousedown.prevent="">      
       <span class="label" @mousedown.prevent="handleAction('highlight')">Highlight</span>      
-    <!-- You can add more buttons here -->    
+      <!-- You can add more buttons here -->    
     </div>    
     <!-- The insterted text should be displayed here -->    
-    <slot/>  
+    <p>The quick brown fox jumps over the lazy dog.</p>
+    <p>The quick brown fox jumps over the lazy dog.</p>
+    <p>The quick brown fox jumps over the lazy dog.</p>
   </div>
 </template>
 
@@ -68,14 +70,14 @@ export default {
 
       // Finally, if the selection is valid,    
       // set the position of the menu element,    
-      // record offsets
+      // record offsets and line number 
       // then, show the menu    
       this.x = x + (width / 2)    
       this.y = y + window.scrollY - 10    
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset
       this.showMenu = true  
-      this.lineNo = Array.prototype.indexOf.call(startNode.parentNode.children, startNode);
+      this.lineNo = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
     },
     handleAction(action) {
       this.$emit(action, Annotation.create(this.lineNo, this.anchorOffset, this.focusOffset, 'DEFAULT'))

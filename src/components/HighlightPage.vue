@@ -4,9 +4,6 @@
       <h2 class="file-title">{{ document.title }}</h2>
       <br/>
       <HighlightBox v-bind:annotations="annotations" @highlight="onHighlight">
-        <p>The quick brown fox jumps over the lazy dog.</p>
-        <p>The quick brown fox jumps over the lazy dog.</p>
-        <p>The quick brown fox jumps over the lazy dog.</p>
       </HighlightBox>
     </div>
     <LabelsBox v-bind:labels="annotations"></LabelsBox>
