@@ -1,21 +1,24 @@
 <template>
   <div id="highlight-page">
     <div class="main-highlight-window">
-      <div class="file-title">{{ document.title }}</div>
+      <h2 class="file-title">{{ document.title }}</h2>
       <br/>
       <HighlightBox @highlight="onHighlight">
         <p>{{ document.text }}</p>
       </HighlightBox>
     </div>
+    <LabelsBox v-bind:labels="labels"></LabelsBox>
   </div>
 </template>
 
 <script>
 import HighlightBox from './HighlightBox'
+import LabelsBox from './LabelsBox'
 
 export default {
   components: {
-    HighlightBox
+    HighlightBox,
+    LabelsBox
   },
   data() {
     return {
@@ -23,7 +26,7 @@ export default {
         title: 'Hello',
         text: 'The quick brown fox jumps over the lazy dog.'
       },
-      fragments: []
+      labels: []
     }
   },
   methods: {
