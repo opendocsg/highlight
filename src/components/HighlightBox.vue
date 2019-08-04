@@ -1,15 +1,16 @@
 <template>
-  <div id="highlight-box">
-  <div v-show="showMenu" class="menu" :style="{left: `${x}px`,top: `${y}px`}" @mousedown.prevent="">      
-    <span class="item" @mousedown.prevent="handleAction('highlight')">Highlight</span>      
-  <!-- You can add more buttons here -->    
-  </div>    
-  <!-- The insterted text should be displayed here -->    
-  <slot/>  
-</div>
+  <div ref="highlightBox" id="highlight-box">
+    <div v-show="showMenu" class="menu" :style="{left: `${x}px`,top: `${y}px`}" @mousedown.prevent="">      
+      <span class="label" @mousedown.prevent="handleAction('highlight')">Highlight</span>      
+    <!-- You can add more buttons here -->    
+    </div>    
+    <!-- The insterted text should be displayed here -->    
+    <slot/>  
+  </div>
 </template>
 
 <script>
+import Annotation from './Annotation'
 
 export default {
   data() {
@@ -17,12 +18,23 @@ export default {
       x: 0,
       y: 0,
       showMenu: false,
-      selectedText: ''
+      anchorOffset: -1,
+      focusOffset: -1,
+      lineNo: -1
     }
   },
   computed: {
     highlightableElem() {
-      return this.$slots.default[0].elm
+      return this.$refs.highlightBox
+    }
+  },
+  props: {
+    annotations: {
+      validator: function(annotationArr) {
+        /* eslint-disable */
+        console.log(annotationArr)
+        return annotationArr.every(Annotation.validate)
+      }
     }
   },
   mounted() {  
@@ -37,12 +49,11 @@ export default {
       const selectionRange = selection.getRangeAt(0)    
       const startNode = selectionRange.startContainer.parentNode // startNode is the element that the selection starts in        
       const endNode = selectionRange.endContainer.parentNode  // endNode is the element that the selection ends in    
+
       // if the selected text is not part of the highlightableEl (i.e. <p>) OR    
       // if startNode !== endNode (i.e. the user selected multiple paragraphs)    
       // Then don't show the menu (this selection is invalid)    
-      if (!startNode.isSameNode(this.highlightableElem) || !startNode.isSameNode(endNode)) {      
-      // eslint-disable-next-line
-        console.log('invalid')
+      if (!startNode.parentNode.isSameNode(this.highlightableElem) || !startNode.isSameNode(endNode)) {      
         this.showMenu = false      
         return    
       }
@@ -57,16 +68,18 @@ export default {
 
       // Finally, if the selection is valid,    
       // set the position of the menu element,    
-      // set selectedText to content of the selection    
+      // record offsets
       // then, show the menu    
       this.x = x + (width / 2)    
       this.y = y + window.scrollY - 10    
-      this.selectedText = selection.toString()    
+      this.anchorOffset = selection.anchorOffset
+      this.focusOffset = selection.focusOffset
       this.showMenu = true  
+      this.lineNo = Array.prototype.indexOf.call(startNode.parentNode.children, startNode);
     },
     handleAction(action) {
-      this.$emit(action, this.selectedText)
-    }
+      this.$emit(action, Annotation.create(this.lineNo, this.anchorOffset, this.focusOffset, 'DEFAULT'))
+    },
   }
 }
 </script>
@@ -102,14 +115,14 @@ export default {
   border-right: 6px solid transparent;  
   border-top: 6px solid #333;
 }
-.item {  
+.label {  
   color: #FFF;  
   cursor: pointer;
 }
-.item:hover {  
+.label:hover {  
   color: #1199ff;
 }
-.item + .item {  
+.label + .label {  
   margin-left: 10px;
 }
 

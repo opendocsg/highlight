@@ -3,11 +3,13 @@
     <div class="main-highlight-window">
       <h2 class="file-title">{{ document.title }}</h2>
       <br/>
-      <HighlightBox @highlight="onHighlight">
-        <p>{{ document.text }}</p>
+      <HighlightBox v-bind:annotations="annotations" @highlight="onHighlight">
+        <p>The quick brown fox jumps over the lazy dog.</p>
+        <p>The quick brown fox jumps over the lazy dog.</p>
+        <p>The quick brown fox jumps over the lazy dog.</p>
       </HighlightBox>
     </div>
-    <LabelsBox v-bind:labels="labels"></LabelsBox>
+    <LabelsBox v-bind:labels="annotations"></LabelsBox>
   </div>
 </template>
 
@@ -24,15 +26,16 @@ export default {
     return {
       document: {
         title: 'Hello',
-        text: 'The quick brown fox jumps over the lazy dog.'
+        text: '<p>The quick brown fox jumps over the lazy dog.</p>'
       },
-      labels: []
+      annotations: []
     }
   },
   methods: {
-    onHighlight(highlightedText) {
-      // eslint-disable-next-line
-      console.log('Highlighted ' + highlightedText)
+    onHighlight(annotation) {
+      /* eslint-disable */
+      console.log('annotated ' + JSON.stringify(annotation))
+      this.annotations.push(annotation)
     }
   }
 }
