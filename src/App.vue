@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <AppHeader/>
-    <AppBody/>
+    <NavBar/>
+    <div id="app-body">
+      <HighlightPage/>
+    </div>
   </div>
 </template>
 
 <script>
-import AppHeader from './components/AppHeader'
-import AppBody from './components/AppBody'
+import NavBar from './components/NavBar'
+import HighlightPage from './components/HighlightPage'
 
 export default {
   name: 'app',
   components: {
-    AppHeader,
-    AppBody
+    NavBar,
+    HighlightPage
   }
 }
 </script>

@@ -3,11 +3,6 @@
     <div v-if="rawText === ''" class="dropbox">
       Drag and drop a txt file...
     </div>
-    <div v-else class="main-highlight-window">
-      <div class="file-title">{{ fileTitle }}</div>
-      <br/>
-      <p v-for="(paragraph, index) in processedText" :key="index" class="file-text">{{ paragraph }}</p>
-    </div>
   </div>
 </template>
 
