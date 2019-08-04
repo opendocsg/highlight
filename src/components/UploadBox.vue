@@ -61,27 +61,27 @@ export default {
 </script>
 
 <style>
-  .dropbox {
-    align-self: center;
-    background-color: #EBEBEB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 5px dashed #C4C4C4;
-    border-radius: 25px;
-    width: 650px;
-    height: 450px;
-    margin-top: 100px;
-  }
-  .file-text {
-    text-align: left;
-  }
-  .file-title {
-    font-size: 24px;
-    line-height: 33px;
-    margin-top: 10px;
-  }
-  .main-highlight-window {
-    margin-top: 20px;
-  }
+.dropbox {
+  align-self: center;
+  background-color: #EBEBEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px dashed #C4C4C4;
+  border-radius: 25px;
+  width: 650px;
+  height: 450px;
+  margin-top: 100px;
+}
+.file-text {
+  text-align: left;
+}
+.file-title {
+  font-size: 24px;
+  line-height: 33px;
+  margin-top: 10px;
+}
+.main-highlight-window {
+  margin-top: 20px;
+}
 </style>
