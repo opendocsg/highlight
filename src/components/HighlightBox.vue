@@ -1,9 +1,13 @@
 <template>
   <div ref="highlightBox" id="highlight-box">
-    <div v-show="showMenu" class="menu" :style="{left: `${x}px`,top: `${y}px`}" @mousedown.prevent="">      
-      <span class="label" @mousedown.prevent="handleAction('highlight')">Highlight</span>      
-      <!-- You can add more buttons here -->    
-    </div>    
+    <HighlightTooltip 
+      v-show="showMenu" 
+      v-bind:labels="labels"
+      class="menu" 
+      :style="{left: `${x}px`,top: `${y}px`}" 
+      @mousedown.prevent=""
+      @labelclick="onLabelClick">      
+    </HighlightTooltip>    
     <!-- The insterted text should be displayed here -->    
     <p 
       v-for="(line, index) in processedText" 
@@ -17,6 +21,7 @@
 import _ from 'lodash'
 import Annotation from './Annotation'
 import Label from './Label'
+import HighlightTooltip from './HighlightTooltip'
 
 export default {
   data() {
@@ -29,6 +34,9 @@ export default {
       line: -1,
       selectionRange: null
     }
+  },
+  components: {
+    HighlightTooltip
   },
   computed: {
     highlightableElem() {
@@ -91,8 +99,8 @@ export default {
       this.selectionRange = selectionRange
       this.line = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
     },
-    handleAction(action) {
-      this.$emit(action, Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT', this.selectionRange))
+    onLabelClick() {
+      this.$emit('highlight', Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT', this.selectionRange))
     },
   }
 }
@@ -104,7 +112,8 @@ export default {
 }
 
 .menu {
-  height: 30px;  
+  height: 50px;  
+  width: 150px;
   padding: 5px 10px;  
   background: #333;  
   border-radius: 3px;  
@@ -128,16 +137,6 @@ export default {
   border-left: 6px solid transparent;  
   border-right: 6px solid transparent;  
   border-top: 6px solid #333;
-}
-.label {  
-  color: #FFF;  
-  cursor: pointer;
-}
-.label:hover {  
-  color: #1199ff;
-}
-.label + .label {  
-  margin-left: 10px;
 }
 
 </style>
