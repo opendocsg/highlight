@@ -1,6 +1,6 @@
 <template>
   <div id="label-pill">
-    {{ label.id }}
+    {{ label.type }}
   </div>
 </template>
 

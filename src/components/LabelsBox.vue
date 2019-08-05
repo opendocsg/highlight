@@ -46,11 +46,21 @@ export default {
     }
   },
   methods: {
-    onNewLabel(e) {
-      console.log(this.newLabelName)
-      if (!(0 < this.newLabelName.length && this.newLabelName.length < Annotation.MAX_TYPE_LEN)) {
-        this.error = `Length of label must be between 1 and ${Annotation.MAX_TYPE_LEN}`
+    onNewLabel() {
+      if (!(0 < this.newLabelName.length && this.newLabelName.length <= Annotation.MAX_TYPE_LEN)) {
+        this.error = `Length of label name must be between 1 and ${Annotation.MAX_TYPE_LEN}`
+        return
       }
+      if (/\s/.test(this.newLabelName)) {
+        this.error = 'Label name cannot contain spaces'
+        return
+      }
+      const processedLabelName = this.newLabelName.toUpperCase()
+      if (Label.containsType(this.labels, processedLabelName)) {
+        this.error = `Label ${processedLabelName} already exists`
+        return
+      }
+      this.$emit('newlabel', processedLabelName)
       this.error = ''
       this.newLabelName = ''
     }

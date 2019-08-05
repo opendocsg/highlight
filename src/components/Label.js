@@ -29,6 +29,17 @@ class Label {
         labels.push(newLabel)
     }
 
+    addLabelByTypeToArray(labels, type) {
+        if (!this.validateArray(labels) || !Annotation.validateType(type)) {
+            throw new Error('Label type validation failed.')
+        }
+        if (this.containsType(labels, type)) {
+            throw new Error('Label duplicate.')
+        }
+        const newLabel = this.createType(type)
+        labels.push(newLabel)
+    }
+
     create(annotation) {
         this.numLabels++
         return {
@@ -37,6 +48,28 @@ class Label {
             type: annotation.type,
             annotations: [annotation]
         }
+    }
+
+    createType(type) {
+        this.numLabels++
+        if (!Annotation.validateType(type)) {
+            throw new Error('Label type validation failed.')
+        }
+        return {
+            id: this.numLabels,
+            color: COLOR[this.numLabels % COLOR.length],
+            type: type,
+            annotations: []
+        }
+    }
+
+    containsType(labels, type) {
+        for (let label of labels) {
+            if (label.type === type) {
+                return true
+            }
+        }
+        return false
     }
 
     getAnnotations(labels) {

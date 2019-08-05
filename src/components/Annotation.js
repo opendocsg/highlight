@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import { ExportToCsv } from 'export-to-csv'
 
-const MAX_TYPE_LEN = 10
 /**
  * Represents a single highlight
  * line, begin, end offset type are necessary for AWS comprehend
@@ -11,6 +10,7 @@ const MAX_TYPE_LEN = 10
  * so that we don't have to insert it ourselves
  */
 class Annotation {
+    MAX_TYPE_LEN = 10
     create(line, beginOffset, endOffset, type, selRange) {
         if (!this.validate({line, beginOffset, endOffset, type, selRange})) {
             throw new Error('Annotation validation failed.')
@@ -29,8 +29,7 @@ class Annotation {
             'line' in aObject && _.isInteger(aObject.line) &&
             'beginOffset' in aObject && _.isInteger(aObject.beginOffset) &&
             'endOffset' in aObject && _.isInteger(aObject.endOffset) &&
-            'type' in aObject && _.isString(aObject.type) &&
-            aObject.type === aObject.type.toUpperCase() && // Type must be UPPERCASE
+            'type' in aObject && this.validateType(aObject.type) &&
             aObject.line >= 0 && aObject.beginOffset >= 0 && aObject.endOffset >= 0 &&
             this.validateRange(aObject.selRange)
     }
@@ -38,6 +37,13 @@ class Annotation {
     validateArray(annotations) {
         return _.isArray(annotations) &&
             annotations.every((annotation) => this.validate(annotation))
+    }
+
+    validateType(type) {
+        return _.isString(type) &&
+            0 < type.length && type.length <= this.MAX_TYPE_LEN &&
+            type === type.toUpperCase() && // type must be uppercase
+            !(/\s/.test(type)) // No whitespace
     }
 
     validateRange(selRange) {

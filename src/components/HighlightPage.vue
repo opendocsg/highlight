@@ -16,7 +16,10 @@
           </HighlightBox>
         </div>
         <div class="col">
-          <LabelsBox v-bind:labels="labels"></LabelsBox>
+          <LabelsBox 
+            v-bind:labels="labels"
+            @newlabel="onNewLabelName"
+          ></LabelsBox>
         </div>
       </div>
       <div class="row justify-content-end">
@@ -67,8 +70,6 @@ export default {
   },
   methods: {
     onHighlight(annotation) {
-      /* eslint-disable */
-      console.log('annotated ' + JSON.stringify(annotation))
       Label.addToArray(this.labels, annotation)
       console.log(this.labels[0].annotations[0])
       this.doHighlight()
@@ -83,8 +84,11 @@ export default {
         }
       }
     },
-    onExport(e) {
+    onExport() {
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
+    },
+    onNewLabelName(type) {
+      Label.addLabelByTypeToArray(this.labels, type)
     }
   }
 }
