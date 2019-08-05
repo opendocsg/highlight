@@ -5,25 +5,20 @@
       <!-- You can add more buttons here -->    
     </div>    
     <!-- The insterted text should be displayed here -->    
-    <HighlightRow 
+    <p 
       v-for="(line, index) in processedText" 
       v-bind:key="index"
-      v-bind:row="line"
-      v-bind:lineNum="index"
-      v-bind:annotation="getAnnotationForLine(index)"
-    ></HighlightRow>
+      v-html="line"
+    ></p>
   </div>
 </template>
 
 <script>
-import Annotation from './Annotation'
-import HighlightRow from './HighlightRow'
 import _ from 'lodash'
+import Annotation from './Annotation'
+import Label from './Label'
 
 export default {
-  components: {
-    HighlightRow
-  },
   data() {
     return {
       x: 0,
@@ -31,7 +26,8 @@ export default {
       showMenu: false,
       anchorOffset: -1,
       focusOffset: -1,
-      line: -1
+      line: -1,
+      selectionRange: null
     }
   },
   computed: {
@@ -40,9 +36,9 @@ export default {
     }
   },
   props: {
-    annotations: {
-      validator: function(annotationArr) {
-        return annotationArr.every(Annotation.validate)
+    labels: {
+      validator: function(labelsArr) {
+        return Label.validateArray(labelsArr)
       }
     },
     processedText: {
@@ -92,19 +88,12 @@ export default {
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset
       this.showMenu = true  
+      this.selectionRange = selectionRange
       this.line = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
     },
     handleAction(action) {
-      this.$emit(action, Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT'))
+      this.$emit(action, Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT', this.selectionRange))
     },
-    getAnnotationForLine(lineNum) {
-      for (var i=0; i<this.annotations.length; i++) {
-        if (this.annotations[i].line === lineNum) {
-          return this.annotations[i]
-        }
-      }
-      return null
-    }
   }
 }
 </script>

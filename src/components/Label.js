@@ -57,7 +57,7 @@ class Label {
             'id' in label && _.isNumber(label.id) && label.id >= 0 &&
             'color' in label &&
             'type' in label &&
-            'annotations' in label
+            'annotations' in label && _.isArray(label.annotations)
     }
 
 }

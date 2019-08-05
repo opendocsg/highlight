@@ -1,6 +1,7 @@
 <template>
   <p id="highlight-row" v-html="renderedRow">
     <!-- Outer tag must be P for this to work -->
+    {{ renderedRow }}
   </p>
 </template>
 
@@ -12,27 +13,24 @@ export default {
   },
   computed: {
     renderedRow: function() {
-      if (this.annotation === null) {
-        return this.row
-      } else {
-        return this.insertHighlight(this.row, this.annotation.beginOffset, this.annotation.endOffset)
-        
-      }
+      return this.row
     }
   },
   methods: {
-    insertHighlight(str, begin, end) {
-      return `${str.substring(0, begin)}<span style="background-color:red; color:white;">${str.substring(begin, end)}</span>${str.substring(end, str.length)}`
-    }
   },
   props: {
     row: {
-      type: String
+      type: String,
+      required: true
     },
     lineNum: {
-      type: Number
+      type: Number,
+      required: true
     },
-    annotation: Object // if null, means that this row is not annotated
+    labels: {
+      type:Array,
+      required: true
+    }
   },
 }
 </script>

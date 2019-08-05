@@ -2,7 +2,7 @@
   <div class="upload-page">
     <div id="dropbox">
       <p>
-        Drag and drop a text file
+        {{ message }}
       </p>
     </div>
   </div>
@@ -11,6 +11,11 @@
 <script>
 
 export default {
+  data() {
+    return {
+      message: 'Drag and drop a text file here!'
+    }
+  },
   mounted() {
     let dropbox = document.getElementById("dropbox")
     dropbox.addEventListener("dragenter", this.dragenter, false)
@@ -32,6 +37,7 @@ export default {
     dragover(e) {
       e.stopPropagation();
       e.preventDefault();
+      this.message = 'Drop your file here!'
     },
     drop(e) {
       e.stopPropagation();

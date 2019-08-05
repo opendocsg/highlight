@@ -1,5 +1,6 @@
 <template>
   <div id="highlight-page">
+    <p v-if="processedText === undefined">No document selected. Redirecting...</p>
     <h2 class="file-title">{{ title }}</h2>
     <br/>
     <div class="container-fluid main-highlight-window">
@@ -10,12 +11,12 @@
         <div class="col-8">
           <HighlightBox 
             v-bind:processedText="processedText" 
-            v-bind:annotations="Label.getAnnotations(this.labels)" 
+            v-bind:labels="labels" 
             @highlight="onHighlight">
           </HighlightBox>
         </div>
         <div class="col">
-          <LabelsBox v-bind:labels="annotations"></LabelsBox>
+          <LabelsBox v-bind:labels="labels"></LabelsBox>
         </div>
       </div>
       <div class="row justify-content-end">
@@ -47,14 +48,21 @@ export default {
       labels: []
     }
   },
+  mounted() {
+    if (this.processedText === undefined) {
+      this.$router.push('upload')
+    }
+  },
   props: {
     processedText: {
       validate: function(arr) {
         return arr.every(_.isString)
-      }
+      },
+      required: true
     },
     title: {
-      type: String
+      type: String,
+      required: true
     }
   },
   methods: {
@@ -62,7 +70,18 @@ export default {
       /* eslint-disable */
       console.log('annotated ' + JSON.stringify(annotation))
       Label.addToArray(this.labels, annotation)
-      console.log(this.labels)
+      console.log(this.labels[0].annotations[0])
+      this.doHighlight()
+    },
+    doHighlight() {
+      for (let label of this.labels) {
+        let annotations = label.annotations
+        for (let annotation of annotations) {
+          let newNode = document.createElement('span')
+          newNode.setAttribute("style", `background-color:${label.color};color:white;`)
+          annotation.selRange.surroundContents(newNode)
+        }
+      }
     },
     onExport(e) {
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
