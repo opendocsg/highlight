@@ -5,7 +5,7 @@
     <div class="container-fluid main-highlight-window">
       <div class="row">
         <div class="col">
-          Hello
+          Finder here
         </div>
         <div class="col-8">
           <HighlightBox 
@@ -18,14 +18,23 @@
           <LabelsBox v-bind:labels="annotations"></LabelsBox>
         </div>
       </div>
+      <div class="row justify-content-end">
+        <div class="col-4">
+          <button type="button" class="btn btn-success btn-lg"
+            @click="onExport">Save
+          </button>
+          <button type="button" class="btn btn-danger btn-lg">Discard</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import _ from 'lodash'
 import HighlightBox from './HighlightBox'
 import LabelsBox from './LabelsBox'
-import _ from 'lodash'
+import Annotation from './Annotation'
 
 export default {
   components: {
@@ -52,6 +61,10 @@ export default {
       /* eslint-disable */
       console.log('annotated ' + JSON.stringify(annotation))
       this.annotations.push(annotation)
+    },
+    onExport(e) {
+      Annotation.exportArrayOfAnnotations(this.title, this.annotations)
+      
     }
   }
 }

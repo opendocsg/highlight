@@ -28,12 +28,16 @@ class Annotation {
         if (!_.isString(title) || !_.isArray(annotations)) {
             throw new Error('Annotation export failed.')
         }
+        if (_.isEmpty(annotations)) return
         // Refer to https://docs.aws.amazon.com/comprehend/latest/dg/cer-annotation.html
         // for export format
-        annotations = annotations.map((annotation) => {
+        let annoWithTitle = annotations.map((annotation) => {
             return {
-                ...annotation,
-                title: title
+                'File': title,
+                'Line': annotation.line,
+                'Begin Offset': annotation.beginOffset,
+                'End Offset': annotation.endOffset,
+                'Type': annotation.type
             }
         })
 
@@ -42,17 +46,17 @@ class Annotation {
             quoteStrings: '"',
             decimalSeparator: '.',
             showLabels: true, 
-            showTitle: true,
+            showTitle: false,
             title: 'annotations',
             useTextFile: false,
             useBom: true,
-            //useKeysAsHeaders: true,
-            headers: ['File', 'Line', 'Begin Offset', 'End Offset', 'Type'] // <- Won't work with useKeysAsHeaders present!
+            useKeysAsHeaders: true,
+            //headers: ['File', 'Line', 'Begin Offset', 'End Offset', 'Type'] // <- Won't work with useKeysAsHeaders present!
           };
         
         const csvExporter = new ExportToCsv(options)
         
-        return csvExporter.generateCsv(annotations)
+        csvExporter.generateCsv(annoWithTitle)
     }
 }
 
