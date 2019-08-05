@@ -72,8 +72,10 @@ export default {
 #labels-box {
 }
 
-#red {
-  color: red;
+#labels-pills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 </style>

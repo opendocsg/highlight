@@ -2,7 +2,7 @@ import _ from 'lodash'
 import Annotation from './Annotation'
 
 const COLOR = [
-    '#FF0000',
+    '#FFC0CB',
     '#4169E1',
     '#2E8B57'
 ]

@@ -25,5 +25,6 @@ export default {
 
 <style>
 #label-pill {
+  margin: 5px;
 }
 </style>

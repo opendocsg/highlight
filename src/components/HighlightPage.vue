@@ -8,7 +8,7 @@
         <div class="col">
           In text finder here
         </div>
-        <div class="col-8">
+        <div class="col-7">
           <HighlightBox 
             v-bind:processedText="processedText" 
             v-bind:labels="labels" 
