@@ -6,7 +6,7 @@
     <div class="container-fluid main-highlight-window">
       <div class="row">
         <div class="col">
-          Finder here
+          In text finder here
         </div>
         <div class="col-8">
           <HighlightBox 

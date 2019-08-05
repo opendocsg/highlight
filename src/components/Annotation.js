@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { ExportToCsv } from 'export-to-csv'
 
+const MAX_TYPE_LEN = 10
 /**
  * Represents a single highlight
  * line, begin, end offset type are necessary for AWS comprehend
