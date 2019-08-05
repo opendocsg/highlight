@@ -10,7 +10,7 @@
         <div class="col-8">
           <HighlightBox 
             v-bind:processedText="processedText" 
-            v-bind:annotations="annotations" 
+            v-bind:annotations="Label.getAnnotations(this.labels)" 
             @highlight="onHighlight">
           </HighlightBox>
         </div>
@@ -32,9 +32,10 @@
 
 <script>
 import _ from 'lodash'
+import Annotation from './Annotation'
+import Label from './Label'
 import HighlightBox from './HighlightBox'
 import LabelsBox from './LabelsBox'
-import Annotation from './Annotation'
 
 export default {
   components: {
@@ -43,7 +44,7 @@ export default {
   },
   data() {
     return {
-      annotations: []
+      labels: []
     }
   },
   props: {
@@ -60,11 +61,11 @@ export default {
     onHighlight(annotation) {
       /* eslint-disable */
       console.log('annotated ' + JSON.stringify(annotation))
-      this.annotations.push(annotation)
+      Label.addToArray(this.labels, annotation)
+      console.log(this.labels)
     },
     onExport(e) {
-      Annotation.exportArrayOfAnnotations(this.title, this.annotations)
-      
+      Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
     }
   }
 }
