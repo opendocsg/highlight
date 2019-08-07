@@ -1,6 +1,6 @@
 <template>
-  <div id="labels-box">
-    <label for="basic-url">Add New Label:</label>
+  <div id="labels-box" class="position-fixed d-flex flex-column">
+    <label for="basic-url"><b>Add New Label</b></label>
     <div class="input-group mb-3">
       <input 
         type="text" 
@@ -70,6 +70,7 @@ export default {
 
 <style scoped>
 #labels-box {
+  width: 18%;
 }
 
 #labels-pills {

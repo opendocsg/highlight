@@ -1,9 +1,11 @@
 <template>
   <div class="upload-page">
-    <div id="dropbox">
-      <p>
-        {{ message }}
-      </p>
+    <div class="container-fluid d-flex justify-content-center">
+      <div id="dropbox">
+        <p>
+          {{ message }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -70,9 +72,6 @@ export default {
 
 <style>
 .upload-page {
-  display: flex; 
-  align-items: center;
-  justify-content: center;
 }
 
 #dropbox {

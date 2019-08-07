@@ -16,10 +16,11 @@
           </HighlightBox>
         </div>
         <div class="col">
-          <LabelsBox 
-            v-bind:labels="labels"
-            @newlabel="onNewLabelName"
-          ></LabelsBox>
+            <LabelsBox
+              v-bind:labels="labels"
+              @newlabel="onNewLabelName"
+            ></LabelsBox>
+          </div>
         </div>
       </div>
       <div class="row justify-content-end">

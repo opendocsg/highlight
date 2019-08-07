@@ -1,20 +1,18 @@
 <template>
-  <div id="app">
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"><i>Highlight</i></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <router-link class="nav-item nav-link" to="/upload">Upload</router-link>
-            <router-link class="nav-item nav-link" to="/about">About</router-link>
-          </div>
+  <div id="app" class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between fixed-top">
+        <div class="navbar-nav">
+          <router-link class="nav-item nav-link" to="/upload">Upload</router-link>
+          <router-link class="nav-item nav-link" to="/about">About</router-link>
         </div>
+        <a class="navbar-brand" href="#"><i>Highlight</i></a>
+        <span class="navbar-text">
+           Last modified
+        </span>
       </nav>
+    <div id="main">
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
@@ -35,6 +33,10 @@ export default {
   color: #2c3e50;
 }
 
+#main {
+  margin-top: 4em;
+}
+
 .nav-item.nav-link.router-link-active {
   color:black;
 }
@@ -43,4 +45,5 @@ p {
   font-size: 1.25em;
   text-align: left;
 }
+
 </style>
