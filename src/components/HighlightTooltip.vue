@@ -1,8 +1,8 @@
 <template>
-  <div id="highlight-tooltip" v-on:wheel.prevent="onWheelEvent">
-    <span class="label" @mousedown.prevent="">{{ labelName }} </span>
+  <div id="highlight-tooltip" class="w-10" v-on:wheel.prevent="onWheelEvent">
+    <span class="label" @mousedown.prevent="">{{ getLabelName() }} </span>
     <span id="highlight-tooltip-badge" class="badge"
-      :style="{'background-color': labelColor}"
+      :style="{'background-color': getLabelColor()}"
     >&nbsp;&nbsp;</span>
   </div>
 </template>
@@ -17,20 +17,6 @@ export default {
       index: 0
     }
   },
-  computed: {
-    labelName: function() {
-      if (this.labels.length <= 0) {
-        return "No labels"
-      }
-      return this.labels[this.index].type
-    },
-    labelColor: function() {
-      if (this.labels.length <= 0) {
-        return '#000000'
-      }
-      return this.labels[this.index].color
-    }
-  },
   props: {
     labels: {
       validator: function(labelsArr) {
@@ -39,6 +25,18 @@ export default {
     },
   },
   methods: {
+    getLabelName: function() {
+      if (this.labels.length <= 0) {
+        return "No labels"
+      }
+      return this.labels[this.index].type
+    },
+    getLabelColor: function() {
+      if (this.labels.length <= 0) {
+        return '#000000'
+      }
+      return this.labels[this.index].color
+    },
     onWheelEvent: _.debounce(function (e) {
       if (e.deltaY < 0) {
         this.index++
