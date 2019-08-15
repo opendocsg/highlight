@@ -16,12 +16,15 @@ const COLOR = [
     '#f032e6',
 ]
 
+
 /**
  * Label is object. Holds 1 color and many annotations
  * One annotation can have only have one label (as indicated by type)
  * 
  */
 class Label {
+    // Constraint imposed by AWS Comprehend
+    MAX_NUM_LABELS = 12
     numLabels = 0
     // Add to label with existing type. If not exist, create label.
     addToArray(labels, annotation) {
@@ -47,6 +50,20 @@ class Label {
         }
         const newLabel = this.createType(type)
         labels.push(newLabel)
+    }
+
+    removeLabelByTypeFromArray(labels, type) {
+        if (!this.validateArray(labels) || !Annotation.validateType(type)) {
+            throw new Error('Label type validation failed.')
+        }
+        for (let i = 0; i < labels.length; i++) {
+            if (labels[i].type === type) {
+                labels.splice(i, 1)
+                this.numLabels--;
+                return
+            }
+        }
+        throw new Error('Cound not find label to remove.')
     }
 
     create(annotation) {

@@ -19,6 +19,7 @@
             <LabelsBox
               v-bind:labels="labels"
               @newlabel="onNewLabelName"
+              @removelabel="onRemoveLabel"
             ></LabelsBox>
           </div>
         </div>
@@ -84,11 +85,27 @@ export default {
         }
       }
     },
+    removeHighlight(selRange) {
+      // TODO
+    },
     onExport() {
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
     },
     onNewLabelName(type) {
       Label.addLabelByTypeToArray(this.labels, type)
+    },
+    onRemoveLabel(type) {
+      for (let label of this.labels) {
+        if (label.type === type) {
+          for (let annotation of label.annotations) {
+            this.onRemoveAnnotation(annotation)
+          }
+        }
+      }
+      Label.removeLabelByTypeFromArray(this.labels, type)
+    },
+    onRemoveAnnotation(annotation) {
+      this.removeHighlight(annotation.selRange)
     }
   }
 }

@@ -17,6 +17,7 @@
         v-for="(label, index) in labels"
         v-bind:key="index"
         v-bind:label="label"
+        @removelabel="onRemoveLabel"
       ></LabelPill>
     </div>
   </div>
@@ -47,6 +48,10 @@ export default {
   },
   methods: {
     onNewLabel() {
+      if (Label.numLabels >= Label.MAX_NUM_LABELS) {
+        this.error = `The maximum of ${Label.MAX_NUM_LABELS} has been reached.`
+        return
+      }
       if (!(0 < this.newLabelName.length && this.newLabelName.length <= Annotation.MAX_TYPE_LEN)) {
         this.error = `Length of label name must be between 1 and ${Annotation.MAX_TYPE_LEN}`
         return
@@ -63,6 +68,9 @@ export default {
       this.$emit('newlabel', processedLabelName)
       this.error = ''
       this.newLabelName = ''
+    },
+    onRemoveLabel(type) {
+      this.$emit('removelabel', type)
     }
   }
 }
