@@ -3,7 +3,6 @@
     <HighlightTooltip 
       v-show="showMenu" 
       v-bind:labels="labels"
-      class="menu" 
       :style="{left: `${x}px`,top: `${y}px`}" 
       @mousedown.prevent=""
       @labelclick="onLabelClick">      
@@ -91,16 +90,19 @@ export default {
       // set the position of the menu element,    
       // record offsets and line number 
       // then, show the menu    
-      this.x = right + window.scrollX - 230
-      this.y = top + window.scrollY - 130
+      this.x = right + window.scrollX - 375
+      this.y = top + window.scrollY - 190
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset
       this.showMenu = true  
       this.selectionRange = selectionRange
       this.line = Array.prototype.indexOf.call(startNode.parentNode.children, startNode) - 1
     },
-    onLabelClick() {
-      this.$emit('highlight', Annotation.create(this.line, this.anchorOffset, this.focusOffset, 'DEFAULT', this.selectionRange))
+    onLabelClick(type) {
+      if (type === 'No labels') {
+        return
+      }
+      this.$emit('highlight', Annotation.create(this.line, this.anchorOffset, this.focusOffset, type, this.selectionRange))
     },
   }
 }
@@ -111,32 +113,5 @@ export default {
 #hightlight-box {
 }
 
-.menu {
-  height: 50px;  
-  width: 150px;
-  padding: 5px 10px;  
-  background: #333;  
-  border-radius: 3px;  
-  position: absolute;  
-  top: 0;  
-  left: 0;  
-  transform: translate(-50%, -100%);  
-  transition: 0.2s all;  
-  display: flex;  
-  justify-content: center;  
-  align-items: center;
-}
-.menu:after {  
-  content: '';  
-  position: absolute;  
-  left: 50%;  
-  bottom: -5px;  
-  transform: translateX(-50%);  
-  width: 0;  
-  height: 0;  
-  border-left: 6px solid transparent;  
-  border-right: 6px solid transparent;  
-  border-top: 6px solid #333;
-}
 
 </style>

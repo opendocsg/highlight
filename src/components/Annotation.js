@@ -10,7 +10,7 @@ import { ExportToCsv } from 'export-to-csv'
  * so that we don't have to insert it ourselves
  */
 class Annotation {
-    MAX_TYPE_LEN = 10
+    MAX_TYPE_LEN = 16
     create(line, beginOffset, endOffset, type, selRange) {
         if (!this.validate({line, beginOffset, endOffset, type, selRange})) {
             throw new Error('Annotation validation failed.')

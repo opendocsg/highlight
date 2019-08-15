@@ -2,9 +2,18 @@ import _ from 'lodash'
 import Annotation from './Annotation'
 
 const COLOR = [
-    '#FFC0CB',
-    '#4169E1',
-    '#2E8B57'
+    '#4363d8',
+    '#911eb4',
+    '#808000',
+    '#e6194b',
+    '#f58231',
+    '#3cb44b',
+    '#008080',
+    '#9a6324',
+    '#808080',
+    '#000075',
+    '#800000',
+    '#f032e6',
 ]
 
 /**

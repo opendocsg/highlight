@@ -72,7 +72,6 @@ export default {
   methods: {
     onHighlight(annotation) {
       Label.addToArray(this.labels, annotation)
-      console.log(this.labels[0].annotations[0])
       this.doHighlight()
     },
     doHighlight() {
