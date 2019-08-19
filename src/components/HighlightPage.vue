@@ -76,7 +76,6 @@ export default {
       Label.addToArray(this.labels, annotation)
     },
     onExport() {
-      console.log(Label.getAnnotations(this.labels))
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
     },
     onNewLabelName(type) {
@@ -86,7 +85,7 @@ export default {
       Label.removeLabelByTypeFromArray(this.labels, type)
     },
     onRemoveAnnotation() {
-      Label.removeAnnotationByHighlightNodeFromArray(this.labels, node)
+      //Label.removeAnnotationByHighlightNodeFromArray(this.labels, node)
     }
   }
 }
