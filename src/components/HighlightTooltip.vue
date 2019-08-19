@@ -63,8 +63,6 @@ export default {
 
 <style scoped>
 
-#highlight-tooltip-badge {
-}
 .highlight-tooltip .label {
   float:left;
 }

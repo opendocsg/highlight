@@ -31,7 +31,8 @@ export default {
       anchorOffset: -1,
       focusOffset: -1,
       line: -1,
-      selectionRange: null
+      selectionRange: null,
+      highlightNodes:[]
     }
   },
   components: {
@@ -40,7 +41,7 @@ export default {
   computed: {
     highlightableElem() {
       return this.$refs.highlightBox
-    }
+    },
   },
   props: {
     labels: {
@@ -54,6 +55,15 @@ export default {
       }
     }
   },
+  watch: {
+    labels: {
+      deep: true,
+      handler: function(oldLabels, newLabels) {
+        this.unhighlightAll()
+        this.highlightAll()
+      }
+    }
+  },
   mounted() {  
     window.addEventListener('mouseup', this.onMouseup)
   },
@@ -61,6 +71,30 @@ export default {
     window.removeEventListener('mouseup', this.onMouseup)
   },
   methods: {
+    unhighlightAll() {
+      // Turn off all highlighting
+      for (let node of this.highlightNodes) {
+        node.setAttribute("style", "")
+      }
+    },
+    highlightAll() {
+      for (let label of this.labels) {
+        let annotations = label.annotations
+        for (let annotation of annotations) {
+          if (annotation.highlightNode === undefined) {
+            // Create new highlight node
+            let newNode = document.createElement('span')
+            newNode.setAttribute("style", `background-color:${label.color};color:white;`)
+            annotation.selRange.surroundContents(newNode)
+            annotation.highlightNode = newNode
+            this.highlightNodes.push(newNode)
+          } else {
+            // Turn highlighting back on
+            annotation.highlightNode.setAttribute("style", `background-color:${label.color};color:white;`)
+          }
+        }
+      }
+    },
     onMouseup() {
       const selection = window.getSelection()    
       if (selection.rangeCount < 1) {
@@ -90,7 +124,7 @@ export default {
       // set the position of the menu element,    
       // record offsets and line number 
       // then, show the menu    
-      this.x = right + window.scrollX - 375
+      this.x = right + window.scrollX - 275
       this.y = top + window.scrollY - 190
       this.anchorOffset = selection.anchorOffset
       this.focusOffset = selection.focusOffset

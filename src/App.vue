@@ -7,7 +7,7 @@
         </div>
         <a class="navbar-brand" href="#"><i>Highlight</i></a>
         <span class="navbar-text">
-           Last modified
+          For AWS Comprehend
         </span>
       </nav>
     <div id="main">

@@ -5,10 +5,9 @@
     <br/>
     <div class="container-fluid main-highlight-window">
       <div class="row">
-        <div class="col">
-          In text finder here
+        <div class="col-1">
         </div>
-        <div class="col-7">
+        <div class="col-8">
           <HighlightBox 
             v-bind:processedText="processedText" 
             v-bind:labels="labels" 
@@ -73,20 +72,6 @@ export default {
   methods: {
     onHighlight(annotation) {
       Label.addToArray(this.labels, annotation)
-      this.doHighlight()
-    },
-    doHighlight() {
-      for (let label of this.labels) {
-        let annotations = label.annotations
-        for (let annotation of annotations) {
-          let newNode = document.createElement('span')
-          newNode.setAttribute("style", `background-color:${label.color};color:white;`)
-          annotation.selRange.surroundContents(newNode)
-        }
-      }
-    },
-    removeHighlight(selRange) {
-      // TODO
     },
     onExport() {
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
@@ -95,18 +80,8 @@ export default {
       Label.addLabelByTypeToArray(this.labels, type)
     },
     onRemoveLabel(type) {
-      for (let label of this.labels) {
-        if (label.type === type) {
-          for (let annotation of label.annotations) {
-            this.onRemoveAnnotation(annotation)
-          }
-        }
-      }
       Label.removeLabelByTypeFromArray(this.labels, type)
     },
-    onRemoveAnnotation(annotation) {
-      this.removeHighlight(annotation.selRange)
-    }
   }
 }
 </script>
