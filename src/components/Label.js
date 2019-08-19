@@ -66,6 +66,23 @@ class Label {
         throw new Error('Cound not find label to remove.')
     }
 
+    removeAnnotationByHighlightNodeFromArray(labels, highlightNode) {
+        if (this.validateArray(labels)) {
+            throw new Error('Labels validation failed.')
+        }
+        for (let i = 0; i < labels.length; i++) {
+            const annotations = labels[i]
+            for (let j = 0; j < annotations; j++) {
+                const annotation = annotations[j]
+                if (annotation.highlightNode === highlightNode) {
+                    annotations.splice(j, 1);
+                    return
+                }
+            }
+        }
+        throw new Error('Could not find annotation to remove.')
+    }
+
     create(annotation) {
         this.numLabels++
         return {
@@ -100,8 +117,8 @@ class Label {
 
     getAnnotations(labels) {
         let annotations = []
-        for (let label in labels) {
-            annotations = _.concat(annotations, label.annotations)
+        for (let label of labels) {
+            annotations = annotations.concat(label.annotations)
         }
         return annotations
     }

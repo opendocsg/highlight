@@ -26,10 +26,12 @@
       <div class="row justify-content-end">
         <div class="col-4">
           <button type="button" class="btn btn-success btn-lg"
-            @click="onExport">Save
+            @click="onExport">Export
           </button>
-          <button type="button" class="btn btn-danger btn-lg">Discard</button>
         </div>
+      </div>
+      <div class="row justify-content-end">
+        &nbsp;&nbsp;
       </div>
     </div>
   </div>
@@ -74,6 +76,7 @@ export default {
       Label.addToArray(this.labels, annotation)
     },
     onExport() {
+      console.log(Label.getAnnotations(this.labels))
       Annotation.exportArrayOfAnnotations(this.title, Label.getAnnotations(this.labels))
     },
     onNewLabelName(type) {
@@ -82,6 +85,9 @@ export default {
     onRemoveLabel(type) {
       Label.removeLabelByTypeFromArray(this.labels, type)
     },
+    onRemoveAnnotation() {
+      Label.removeAnnotationByHighlightNodeFromArray(this.labels, node)
+    }
   }
 }
 </script>
